@@ -1,0 +1,8 @@
+{
+  "name": "Live Camera & Location Tracker",
+  "description": "A secure device management and diagnostic dashboard developed by Arefin Foysal. Features Firebase authentication, device tracking logs, and link management with premium Bengali UI design.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
