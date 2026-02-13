@@ -1,9 +1,0 @@
-
-{
-  "name": "Arefin Vault Pro v4",
-  "description": "Premium security and tracking dashboard with real-time hardware intelligence and high-accuracy geospatial monitoring.",
-  "requestFramePermissions": [
-    "camera",
-    "geolocation"
-  ]
-}
