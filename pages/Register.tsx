@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile, signOut } from 'firebase/auth'; // signOut যোগ করা হয়েছে
 import { auth, db } from '../firebase';
 import { setDoc, doc, collection, query, where, getDocs } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Fixed the type error: changed HTMLInputChangeEvent to HTMLInputElement
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ 
@@ -60,8 +58,14 @@ const Register: React.FC = () => {
       // 5. Send Verification Email
       await sendEmailVerification(user);
 
-      alert('রেজিস্ট্রেশন সফল! আপনার ইমেইল চেক করে ভেরিফাই করুন।');
+      // --- এখানে পরিবর্তন ---
+      // ৬. ইউজারকে অটো-লগইন থেকে বের করে দিন
+      await signOut(auth); 
+      
+      alert('রেজিস্ট্রেশন সফল! আপনার ইমেইল চেক করে ভেরিফাই করুন, তারপর লগইন করুন।');
       navigate('/login');
+      // --------------------
+
     } catch (err: any) {
       setError(err.message || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে।');
     } finally {
