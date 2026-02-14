@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'; // signOut ইম্পোর্ট করা হয়েছে
 import { auth, db } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -21,7 +20,7 @@ const Login: React.FC = () => {
     try {
       let emailToLogin = identifier;
       
-      // If it's not an email, try to find it as a username in Firestore
+      // ১. ইউজারনেম দিয়ে ইমেইল খুঁজে বের করা
       if (!identifier.includes('@')) {
         const usersRef = collection(db, 'users');
         const q = query(usersRef, where('username', '==', identifier.toLowerCase()));
@@ -33,11 +32,27 @@ const Login: React.FC = () => {
         emailToLogin = querySnapshot.docs[0].data().email;
       }
 
-      await signInWithEmailAndPassword(auth, emailToLogin, password);
+      // ২. ফায়ারবেস অথ দিয়ে লগইন চেষ্টা
+      const userCredential = await signInWithEmailAndPassword(auth, emailToLogin, password);
+      const user = userCredential.user;
+
+      // ৩. ইমেইল ভেরিফিকেশন চেক (আপনার কাঙ্ক্ষিত পরিবর্তন)
+      if (!user.emailVerified) {
+        await signOut(auth); // ভেরিফাইড না থাকলে সেশন আউট করে দিন
+        setError('আপনার ইমেইলটি এখনো ভেরিফাই করা হয়নি। দয়া করে ইনবক্স চেক করে লিঙ্কটি কনফার্ম করুন।');
+        setLoading(false);
+        return; 
+      }
+
+      // ৪. সবকিছু ঠিক থাকলে ড্যাশবোর্ডে রিডাইরেক্ট
       navigate('/dashboard');
+      
     } catch (err: any) {
       console.error(err);
-      setError(err.message.includes('auth/wrong-password') ? 'ভুল পাসওয়ার্ড!' : 'লগইন ব্যর্থ হয়েছে। তথ্য চেক করুন।');
+      let errorMessage = 'লগইন ব্যর্থ হয়েছে। তথ্য চেক করুন।';
+      if (err.message.includes('auth/wrong-password')) errorMessage = 'ভুল পাসওয়ার্ড!';
+      if (err.message.includes('auth/user-not-found')) errorMessage = 'এই ইমেইল দিয়ে কোনো অ্যাকাউন্ট নেই।';
+      setError(err.message === 'ইউজারনেম খুঁজে পাওয়া যায়নি' ? err.message : errorMessage);
     } finally {
       setLoading(false);
     }
