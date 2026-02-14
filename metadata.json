@@ -1,0 +1,9 @@
+{
+  "name": "Live Camera Tracker Pro",
+  "description": "একটি প্রিমিয়াম ট্র্যাকিং সিস্টেম যা রিয়েল-টাইম লোকেশন, ছবি এবং ডিভাইসের তথ্য সংগ্রহ করে ড্যাশবোর্ডে প্রদর্শন করে।",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
