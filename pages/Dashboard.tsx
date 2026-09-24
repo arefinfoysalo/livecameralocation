@@ -379,14 +379,10 @@ const Dashboard: React.FC = () => {
       <footer className="mt-20 py-12 text-center border-t border-slate-900 bg-slate-950/50 backdrop-blur-sm">
          <p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4"> </p>
          <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            <div className="bg-slate-950 px-10 py-4 rounded-[0.9rem]">
                <p className="text-blue-400 text-sm font-black uppercase tracking-widest">
                   Developed by <span className="text-white">Arefin Foysal</span>
                </p>
             </div>
-         </div>
-         <div className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mt-2">
-            © ২০২৬ সকল স্বত্ব সংরক্ষিত | আরফিন ফয়সাল কর্তৃক ডিজাইনকৃত
          </div>
       </footer>
     </div>
