@@ -377,7 +377,7 @@ const Dashboard: React.FC = () => {
       </main>
 
       <footer className="mt-20 py-12 text-center border-t border-slate-900 bg-slate-950/50 backdrop-blur-sm">
-         <p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4">TrackPro Premium Security Dashboard v3.0</p>
+         <p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4"> </p>
          <div className="inline-block p-1 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
             <div className="bg-slate-950 px-10 py-4 rounded-[0.9rem]">
                <p className="text-blue-400 text-sm font-black uppercase tracking-widest">
